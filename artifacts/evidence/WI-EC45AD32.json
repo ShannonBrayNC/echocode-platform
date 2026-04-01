@@ -1,0 +1,16 @@
+{
+  "status": "success",
+  "stage": "complete",
+  "work_item_id": "WI-EC45AD32",
+  "code": {
+    "agent": "coding_agent",
+    "status": "ok",
+    "file_written": "src\\echocode\\generated\\req_abc123.py"
+  },
+  "test": {
+    "agent": "test_agent",
+    "status": "ok",
+    "test_file": "tests\\generated\\test_wi-ec45ad32.py"
+  },
+  "output": ".........                                                                [100%]\n9 passed in 0.05s\n"
+}
