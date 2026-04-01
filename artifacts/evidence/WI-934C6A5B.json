@@ -1,0 +1,16 @@
+{
+  "status": "success",
+  "stage": "complete",
+  "work_item_id": "WI-934C6A5B",
+  "code": {
+    "agent": "coding_agent",
+    "status": "ok",
+    "file_written": "src\\echocode\\generated\\req_abc123_wi_934c6a5b.py"
+  },
+  "test": {
+    "agent": "test_agent",
+    "status": "ok",
+    "test_file": "tests\\generated\\test_wi_934c6a5b.py"
+  },
+  "output": "........                                                                 [100%]\n8 passed in 0.07s\n"
+}
