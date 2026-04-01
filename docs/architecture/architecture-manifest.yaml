@@ -1,0 +1,44 @@
+
+## `docs/architecture/architecture-manifest.yaml`
+
+```yaml
+system_name: EchoCode Platform
+version: 0.1.0
+
+principles:
+  - Approved artifacts are the source of truth
+  - Every handoff must be structured
+  - Every code change must be traceable
+  - No direct writes to protected branches
+
+module_boundaries:
+  orchestrator:
+    may_depend_on:
+      - agents
+      - adapters
+      - domain
+      - services
+      - telemetry
+  agents:
+    may_depend_on:
+      - domain
+      - services
+      - adapters
+      - prompts
+  services:
+    may_depend_on:
+      - domain
+      - adapters
+  adapters:
+    may_depend_on:
+      - domain
+  domain:
+    may_depend_on: []
+  telemetry:
+    may_depend_on: []
+
+forbidden_rules:
+  - domain must not import agents
+  - domain must not import adapters
+  - agents must not write directly to protected branches
+  - work items must reference at least one requirement id

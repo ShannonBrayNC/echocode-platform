@@ -1,0 +1,19 @@
+{
+  "work_item_id": "WI-ABC123",
+  "title": "Implement requirement normalization CLI seed",
+  "requirement_ids": [
+    "REQ-ABC123"
+  ],
+  "design_ids": [],
+  "expected_outcomes": [
+    "CLI can seed sample artifacts",
+    "Traceability record is created",
+    "Evidence bundle is generated"
+  ],
+  "allowed_files": [
+    "src/echocode/cli.py",
+    "src/echocode/services/traceability_service.py",
+    "src/echocode/services/evidence_service.py"
+  ],
+  "status": "planned"
+}

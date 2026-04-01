@@ -1,0 +1,18 @@
+required_pr_fields:
+  - Requirement IDs
+  - Design Links
+  - Validation
+  - Evidence
+
+traceability:
+  require_requirement_ids: true
+  require_work_item_ids: true
+  require_evidence_bundle: true
+
+coding_rules:
+  max_files_changed_without_exception: 20
+  require_tests_for_code_changes: true
+
+documentation_rules:
+  requirement_docs_required: true
+  architecture_manifest_required: true

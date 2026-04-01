@@ -1,0 +1,13 @@
+{
+  "work_item_id": "WI-ABC123",
+  "requirement_ids": [
+    "REQ-ABC123"
+  ],
+  "design_ids": [],
+  "expected_outcomes": [
+    "CLI can seed sample artifacts",
+    "Traceability record is created",
+    "Evidence bundle is generated"
+  ],
+  "status": "planned"
+}

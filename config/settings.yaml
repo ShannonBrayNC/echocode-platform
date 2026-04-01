@@ -1,0 +1,14 @@
+app:
+  name: EchoCode Platform
+  env: local
+  log_level: INFO
+
+paths:
+  docs_root: docs
+  artifacts_root: artifacts
+  schemas_root: schemas
+
+runtime:
+  enforce_policy: true
+  require_traceability: true
+  require_evidence_bundle: true
