@@ -3,7 +3,7 @@ from __future__ import annotations
 from typing import Any
 
 from echocode.adapters.repo_controller import RepoController
-from echocode.agents.coding_agent import CodingAgent
+from echocode.agents.llm_coding_agent import LLMCodingAgent
 from echocode.agents.test_agent import TestAgent
 from echocode.services.architecture_guard_service import ArchitectureGuardService
 from echocode.services.evidence_writer_service import EvidenceWriterService
@@ -13,7 +13,7 @@ from echocode.services.repair_service import RepairService
 
 class ExecutionLoop:
     def __init__(self) -> None:
-        self.coder = CodingAgent()
+        self.coder = LLMCodingAgent()
         self.tester = TestAgent()
         self.executor = ExecutionService()
         self.repair = RepairService()
@@ -78,7 +78,30 @@ class ExecutionLoop:
             f"Automated PR for {work_item['title']}",
         )
 
-        success, output = self.executor.run_tests()
+        max_retries = 2
+        attempt = 0
+        success = False
+        output = ""
+
+        while attempt <= max_retries:
+            success, output = self.executor.run_tests()
+
+            if success:
+                break
+
+            if attempt == max_retries:
+                break
+
+            fix_context = self.repair.attempt_fix(output)
+
+            code_result = self.coder.run(
+                {
+                    "work_item": work_item,
+                    "failure_context": fix_context,
+                }
+            )
+
+            attempt += 1
 
         if success:
             result = {
@@ -90,6 +113,7 @@ class ExecutionLoop:
                 "commit": commit_result,
                 "pr": pr_result,
                 "output": output,
+                "attempts": attempt + 1,
             }
             result["evidence_file"] = self.evidence.write(work_item["work_item_id"], result)
             return result
@@ -105,6 +129,7 @@ class ExecutionLoop:
             "pr": pr_result,
             "fix_attempted": fix,
             "output": output,
+            "attempts": attempt + 1,
         }
         result["evidence_file"] = self.evidence.write(work_item["work_item_id"], result)
         return result

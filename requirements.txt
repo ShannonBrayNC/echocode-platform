@@ -7,3 +7,4 @@ pytest>=8.2.0
 jsonschema>=4.22.0
 types-PyYAML
 types-jsonschema
+openai>=1.0.0
