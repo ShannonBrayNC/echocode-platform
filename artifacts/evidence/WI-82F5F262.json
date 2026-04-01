@@ -1,0 +1,16 @@
+{
+  "status": "success",
+  "stage": "complete",
+  "work_item_id": "WI-82F5F262",
+  "code": {
+    "agent": "coding_agent",
+    "status": "ok",
+    "file_written": "src\\echocode\\generated\\req_abc123_wi_82f5f262.py"
+  },
+  "test": {
+    "agent": "test_agent",
+    "status": "ok",
+    "test_file": "tests\\generated\\test_wi_82f5f262.py"
+  },
+  "output": "..                                                                       [100%]\n2 passed in 0.06s\n"
+}
