@@ -1,0 +1,26 @@
+{
+  "status": "success",
+  "stage": "complete",
+  "work_item_id": "WI-7B14471B",
+  "code": {
+    "agent": "llm_coding_agent",
+    "status": "ok",
+    "file_written": "src\\echocode\\generated\\req_abc123.py"
+  },
+  "test": {
+    "agent": "test_agent",
+    "status": "ok",
+    "test_file": "tests\\generated\\test_wi-7b14471b.py"
+  },
+  "commit": {
+    "work_item_id": "WI-7B14471B",
+    "message": "Implement Create a PM intake normalization flow - Testing",
+    "branch_note": "artifacts\\branches\\WI-7B14471B\\branch-note.txt"
+  },
+  "pr": {
+    "work_item_id": "WI-7B14471B",
+    "pr_file": "artifacts\\branches\\WI-7B14471B\\pull-request.md"
+  },
+  "output": "......                                                                   [100%]\n6 passed in 0.08s\n",
+  "attempts": 1
+}

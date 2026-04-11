@@ -1,0 +1,13 @@
+gates:
+  requirement_baseline:
+    required: true
+    approvers:
+      - human
+  architecture_baseline:
+    required: true
+    approvers:
+      - human
+  risky_change:
+    required: true
+    approvers:
+      - human

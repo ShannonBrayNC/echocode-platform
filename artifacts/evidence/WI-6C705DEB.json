@@ -1,0 +1,26 @@
+{
+  "status": "failed",
+  "stage": "repair",
+  "work_item_id": "WI-6C705DEB",
+  "code": {
+    "agent": "coding_agent",
+    "status": "ok",
+    "file_written": "src\\echocode\\generated\\req_abc123.py"
+  },
+  "test": {
+    "agent": "test_agent",
+    "status": "ok",
+    "test_file": "tests\\generated\\test_wi-6c705deb.py"
+  },
+  "commit": {
+    "work_item_id": "WI-6C705DEB",
+    "message": "Implement Create a PM intake normalization flow - Core Implementation",
+    "branch_note": "artifacts\\branches\\WI-6C705DEB\\branch-note.txt"
+  },
+  "pr": {
+    "work_item_id": "WI-6C705DEB",
+    "pr_file": "artifacts\\branches\\WI-6C705DEB\\pull-request.md"
+  },
+  "fix_attempted": "No automatic fix applied. Review required.\n\nFFFF                                                                     [100%]\n================================== FAILURES ===================================\n_______________________________ test_execution ________________________________\n\n    def test_execution() -> None:\n>       from src.echocode.generated.req_abc123 import execute\nE       ModuleNotFoundError: No module named 'src'\n\ntests\\generated\\test_wi-1aa5bc94.py:2: ModuleNotFoundError\n_______________________________ test_execution ________________________________\n\n    def test_execution() -> None:\n>       from src.echocode.generated.req_abc123 import execute\nE       ModuleNotFoundError: No module named 'src'\n\ntests\\generated\\test_wi-6c705deb.py:2: ModuleNotFoundError\n_______________________________ test_execution ________________________________\n\n    def test_execution() -> None:\n>       from src.echocode.generated.req_abc123 import execute\nE       ModuleNotFoundError: No module named 'src'\n\ntests\\generated\\test_wi-6f241460.py:2: ModuleNotFoundError\n_______________________________ test_execution ________________________________\n\n    def test_execution() -> None:\n>       from src.echocode.generated.req_test123 import execute\nE       ModuleNotFoundError: No module named 'src'\n\ntests\\generated\\test_wi-test123.py:2: ModuleNotFoundError\n=========================== short test summary info ===========================\nFAILED tests/generated/test_wi-1aa5bc94.py::test_execution - ModuleNotFoundEr...\nFAILED tests/generated/test_wi-6c705deb.py::test_execution - ModuleNotFoundEr...\nFAILED tests/generated/test_wi-6f241460.py::test_execution - ModuleNotFoundEr...\nFAILED tests/generated/test_wi-test123.py::test_execution - ModuleNotFoundErr...\n4 failed in 0.12s\n",
+  "output": "FFFF                                                                     [100%]\n================================== FAILURES ===================================\n_______________________________ test_execution ________________________________\n\n    def test_execution() -> None:\n>       from src.echocode.generated.req_abc123 import execute\nE       ModuleNotFoundError: No module named 'src'\n\ntests\\generated\\test_wi-1aa5bc94.py:2: ModuleNotFoundError\n_______________________________ test_execution ________________________________\n\n    def test_execution() -> None:\n>       from src.echocode.generated.req_abc123 import execute\nE       ModuleNotFoundError: No module named 'src'\n\ntests\\generated\\test_wi-6c705deb.py:2: ModuleNotFoundError\n_______________________________ test_execution ________________________________\n\n    def test_execution() -> None:\n>       from src.echocode.generated.req_abc123 import execute\nE       ModuleNotFoundError: No module named 'src'\n\ntests\\generated\\test_wi-6f241460.py:2: ModuleNotFoundError\n_______________________________ test_execution ________________________________\n\n    def test_execution() -> None:\n>       from src.echocode.generated.req_test123 import execute\nE       ModuleNotFoundError: No module named 'src'\n\ntests\\generated\\test_wi-test123.py:2: ModuleNotFoundError\n=========================== short test summary info ===========================\nFAILED tests/generated/test_wi-1aa5bc94.py::test_execution - ModuleNotFoundEr...\nFAILED tests/generated/test_wi-6c705deb.py::test_execution - ModuleNotFoundEr...\nFAILED tests/generated/test_wi-6f241460.py::test_execution - ModuleNotFoundEr...\nFAILED tests/generated/test_wi-test123.py::test_execution - ModuleNotFoundErr...\n4 failed in 0.12s\n"
+}

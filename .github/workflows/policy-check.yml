@@ -1,0 +1,25 @@
+name: Policy Check
+
+on:
+  pull_request:
+
+jobs:
+  policy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Verify config files exist
+        run: |
+          test -f config/policy.yaml
+          test -f config/settings.yaml
+          test -f config/approvals.yaml
+          test -f docs/architecture/architecture-manifest.yaml
+
+      - name: Verify schemas exist
+        run: |
+          test -f schemas/requirement.schema.json
+          test -f schemas/work-item.schema.json
+          test -f schemas/evidence-bundle.schema.json

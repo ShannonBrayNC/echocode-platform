@@ -1,0 +1,11 @@
+{
+  "evidence_id": "EVD-A95E2B64",
+  "work_item_id": "WI-ABC123",
+  "summary": "Seeded sample evidence bundle for initial platform validation.",
+  "artifacts": [
+    "artifacts/sample-log.txt",
+    "artifacts/sample-report.json"
+  ],
+  "notes": [],
+  "status": "complete"
+}

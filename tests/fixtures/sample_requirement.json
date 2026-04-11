@@ -1,0 +1,16 @@
+{
+  "requirement_id": "REQ-ABC123",
+  "title": "Create a PM intake normalization flow",
+  "description": "The platform must normalize incoming project requests into structured requirement records.",
+  "acceptance_criteria": [
+    "Requirement payload validates against schema",
+    "Requirement is ready for approval workflow"
+  ],
+  "assumptions": [
+    "Human approval will occur after intake"
+  ],
+  "constraints": [
+    "Approved artifacts are the source of truth"
+  ],
+  "status": "draft"
+}
