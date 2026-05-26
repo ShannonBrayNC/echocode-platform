@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import os
 from typing import Any
 
 from echocode.agents.coding_agent import CodingAgent
@@ -12,14 +13,19 @@ from echocode.services.github_publish_service import GitHubPublishService
 
 
 class ExecutionLoop:
-    def __init__(self) -> None:
+    def __init__(
+        self,
+        publisher: GitHubPublishService | None = None,
+        publish_enabled: bool | None = None,
+    ) -> None:
         self.coder = CodingAgent()
         self.tester = TestAgent()
         self.executor = ExecutionService()
         self.repair = RepairService()
         self.guard = ArchitectureGuardService()
         self.evidence = EvidenceWriterService()
-        self.publisher = GitHubPublishService()
+        self.publisher = publisher
+        self.publish_enabled = publish_enabled if publish_enabled is not None else bool(os.getenv("GITHUB_APP_ID"))
 
     def run(self, work_item: dict[str, Any]) -> dict[str, Any]:
         # 🔒 Guard: validate allowed files
@@ -108,12 +114,15 @@ class ExecutionLoop:
                 },
             )
 
-            git_result = self.publisher.publish_work_item(
-                work_item=work_item,
-                code_file=code_result["file_written"],
-                test_file=test_result["test_file"],
-                evidence_file=evidence_file,
-            )
+            git_result = {"status": "skipped", "reason": "publish-disabled"}
+            if self.publish_enabled:
+                publisher = self.publisher or GitHubPublishService()
+                git_result = publisher.publish_work_item(
+                    work_item=work_item,
+                    code_file=code_result["file_written"],
+                    test_file=test_result["test_file"],
+                    evidence_file=evidence_file,
+                )
 
             return {
                 "status": "success",

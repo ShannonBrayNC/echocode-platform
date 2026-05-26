@@ -1,0 +1,73 @@
+{
+  "schemaVersion": "1.0.0",
+  "repo": "ShannonBrayNC/echocode-platform",
+  "defaultBranch": "main",
+  "summary": "Multi-agent SDLC platform with GitHub-native traceability, PM/Architect/Coder/QA handoffs, evidence bundles, and drift prevention.",
+  "reviewCadenceHours": 6,
+  "automationSafe": true,
+  "buildCommands": [
+    "python -m pytest tests/unit -q",
+    "python tools/ci_validate.py"
+  ],
+  "optionalLocalCommands": [
+    "ruff check .",
+    "mypy src"
+  ],
+  "architectureNotes": [
+    "Core domain models live under src/echocode/domain.",
+    "Agent roles live under src/echocode/agents.",
+    "Workflow orchestration lives under src/echocode/orchestrator.",
+    "Traceability, evidence, policy, planning, repair, and GitHub services live under src/echocode/services.",
+    "Generated work-item implementation artifacts live under src/echocode/generated and tests/generated."
+  ],
+  "deploymentNotes": [
+    "This repo is currently library/CLI oriented and should be reviewed as a local automation platform.",
+    "Do not deploy or publish generated work-item branches without explicit human approval.",
+    "Do not call external model or GitHub write APIs during scheduled review unless the control plane explicitly enables that action."
+  ],
+  "reviewPriorities": [
+    "Multi-agent workflow health",
+    "PM/Architect/Coder/QA handoff readiness",
+    "Traceability and evidence completeness",
+    "Generated work-item test harness quality",
+    "Type checking and lint readiness",
+    "Cross-repo integration with OpsHelm, Christina, SignalForge, and ETS"
+  ],
+  "issuePolicy": {
+    "labels": [
+      "christina",
+      "repo-review",
+      "echocode",
+      "automation",
+      "needs-codex"
+    ],
+    "fingerprintFields": [
+      "repo",
+      "category",
+      "affectedPath",
+      "recommendationSlug"
+    ],
+    "fingerprintFormat": "christina:echocode-platform:{category}:{affectedPath}:{recommendationSlug}",
+    "duplicateHandling": "Update an existing open issue with the same fingerprint instead of creating a new issue."
+  },
+  "autoFixPolicy": {
+    "enabledByDefault": false,
+    "allowedLabels": [
+      "needs-codex"
+    ],
+    "requiresHumanApproval": true,
+    "allowedScopes": [
+      "documentation",
+      "tests",
+      "non-production scaffolding"
+    ],
+    "blockedScopes": [
+      "repo settings",
+      "secrets",
+      "release automation",
+      "generated work-item branches",
+      "GitHub publishing",
+      "external model calls"
+    ]
+  }
+}
