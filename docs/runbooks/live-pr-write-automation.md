@@ -36,13 +36,34 @@ Christina can call `sendChristinaDryRun()` and receive a contract-shaped respons
 
 - `ok`
 - `mode`
+- `requestedCapability`
 - `reportPath`
 - `selectedIssue`
 - `validationStatus`
 - `policyDecision`
 - `nextAction`
+- `safety`
 
 `isValidChristinaDryRunResponse()` validates the response before Christina routes or escalates it.
+
+## EchoAlpha requirements call
+
+Christina can execute an EchoAlpha requirements call through `executeEchoAlphaRequirementsDryRun()`.
+
+The call models EchoAlpha as a research and intelligence capability, not an autonomous trading system. It covers:
+
+- crypto and market intelligence signal collection
+- global emergency-condition and crypto market correlation research
+- paper-only backtesting
+- human-review risk alerting
+
+The EchoAlpha path is guarded by these rules:
+
+- research and analytics only
+- no live trade execution
+- no profit guarantees or market timing certainty claims
+- human review required before action
+- future live trading would require a separate policy gate, paper-trading phase, and explicit human approval
 
 ## Live verification performed by this branch
 
