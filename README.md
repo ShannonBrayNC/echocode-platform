@@ -33,6 +33,22 @@ The GitHub ingestion layer reads configured repositories, excludes pull requests
 
 GitHub auth uses `GITHUB_TOKEN` first and falls back to `GH_PAT`.
 
+### Issue #40: Christina Sprint Planner
+
+The Christina planner selects the next eligible issue, supports explicit issue overrides, detects blocked work, and creates deterministic dry-run sprint plans.
+
+Sprint plans include:
+
+- objective
+- selected issue
+- impacted files
+- ordered tasks
+- blockers
+- risk notes
+- validation commands
+- rollback plan
+- Markdown summary
+
 ## Development commands
 
 ```bash
