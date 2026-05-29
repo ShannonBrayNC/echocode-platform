@@ -68,7 +68,7 @@ jobs:
             "--mode" "dryRun"
             "--repo" "${TARGET_REPO}"
             "--maxItems" "${MAX_ITEMS}"
-            "--reportDir" "reports/echocodex/runs"
+            "--reportDir" "reports/echocodex"
             "--json"
             "--mock"
           )
@@ -85,7 +85,7 @@ jobs:
         with:
           name: echocodex-dry-run-reports
           path: |
-            reports/echocodex/runs/**
+            reports/echocodex/**
             echocodex-dry-run-output.json
           if-no-files-found: warn
           retention-days: 14
