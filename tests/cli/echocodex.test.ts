@@ -98,3 +98,21 @@ test("runner throws when no eligible issue exists", async () => {
     /No eligible issue selected/
   );
 });
+
+test("runner refuses to continue when repo context gate is not ready", async () => {
+  await assert.rejects(
+    runEchoCodexSprint({
+      runnerConfig,
+      policy: defaultEchoCodexPolicy,
+      issues,
+      repoContext: {
+        repositoryName: "ShannonBrayNC/echocode-platform",
+        fileTree: []
+      },
+      mode: "dryRun",
+      actor: "test-runner",
+      timestamp: "2026-05-29T06:00:00Z"
+    }),
+    /Repo context gate blocked sprint execution: fileTree/
+  );
+});
