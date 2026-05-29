@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 
-import { readFileSync } from "node:fs";
+import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
+import { dirname } from "node:path";
 import { runEchoCodexSprint } from "../runner/runEchoCodexSprint.js";
 import type { EchoCodexRunnerConfig, RunnerIssue } from "../github/types.js";
 import type { EchoCodexMode, EchoCodexPolicy } from "../policy/EchoCodexPolicy.js";
@@ -81,6 +82,13 @@ function createMockRepoContext(repo: string): RepoScannerInput {
   };
 }
 
+function writeArtifacts(artifacts: Array<{ path: string; content: string }>): void {
+  for (const artifact of artifacts) {
+    mkdirSync(dirname(artifact.path), { recursive: true });
+    writeFileSync(artifact.path, artifact.content, "utf8");
+  }
+}
+
 export async function runCli(argv: string[]): Promise<number> {
   const args = parseArgs(argv);
   const runnerConfig = readJsonFile<EchoCodexRunnerConfig>("config/echocodex.runner.json");
@@ -129,6 +137,8 @@ export async function runCli(argv: string[]): Promise<number> {
     actor: "echocodex-cli",
     timestamp: "2026-05-29T06:00:00Z"
   });
+
+  writeArtifacts(result.artifacts);
 
   const output = {
     mode: result.mode,
