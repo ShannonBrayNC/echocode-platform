@@ -1,7 +1,8 @@
 #!/usr/bin/env node
 
 import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
-import { dirname } from "node:path";
+import { dirname, resolve } from "node:path";
+import { pathToFileURL } from "node:url";
 import { runEchoCodexSprint } from "../runner/runEchoCodexSprint.js";
 import type { EchoCodexRunnerConfig, RunnerIssue } from "../github/types.js";
 import type { EchoCodexMode, EchoCodexPolicy } from "../policy/EchoCodexPolicy.js";
@@ -154,7 +155,17 @@ export async function runCli(argv: string[]): Promise<number> {
   return result.policyDecision.decision === "block" ? 2 : 0;
 }
 
-if (import.meta.url === `file://${process.argv[1]}`) {
+function isCliEntrypoint(): boolean {
+  const invokedPath = process.argv[1];
+
+  if (!invokedPath) {
+    return false;
+  }
+
+  return import.meta.url === pathToFileURL(resolve(invokedPath)).href;
+}
+
+if (isCliEntrypoint()) {
   runCli(process.argv.slice(2)).then((exitCode) => {
     process.exitCode = exitCode;
   }).catch((error: unknown) => {
