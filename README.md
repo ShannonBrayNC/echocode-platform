@@ -106,6 +106,46 @@ Run reports include repo, branch, selected issue, policy mode, policy decision, 
 
 Sensitive values such as token, secret, password, API key, private key, connection string, bearer token, and GitHub token patterns are redacted from generated artifacts while traceability IDs remain intact.
 
+### Issue #45: SignalForge and ETS Integration Hooks
+
+EchoCodex now has cross-product integration stubs for the Lantern trust fabric.
+
+Implemented hooks include:
+
+- `EchoCodexEvent` event model
+- event types for issue selection, plan generation, patch proposal, validation completion, policy blocking, human approval, and run completion
+- no-op SignalForge adapter
+- no-op ETS verifier
+- explicit ETS trust states: `Verified`, `Unverified`, `RequiresHumanReview`, and `Rejected`
+
+The no-op ETS verifier requires provenance metadata for cross-system recommendations. Unsigned or incomplete external recommendations cannot trigger write, branch, PR, or auto-merge actions.
+
+No real SignalForge or ETS services are called in this implementation.
+
+### Issue #46: Internal Dry-Run CLI Runner
+
+EchoCodex now includes an internal operator-facing dry-run CLI and runner skeleton.
+
+Run it with:
+
+```bash
+npm run echocodex:run
+```
+
+The runner reads `config/echocodex.runner.json` and `config/echocodex.policy.json`, uses mocked issue/repo context for the first dry-run workflow, selects an issue, scans repository inventory, generates a Christina plan, resolves preview validation, evaluates policy, builds report artifacts, routes no-op SignalForge events, asks the no-op ETS verifier for local trust evaluation, and prints machine-readable JSON.
+
+Supported flags:
+
+- `--repo`
+- `--issue`
+- `--maxItems`
+- `--mode dryRun`
+- `--reportDir`
+- `--json`
+- `--mock`
+
+Non-dry-run modes remain blocked unless the policy explicitly permits them.
+
 ## Development commands
 
 ```bash
@@ -113,6 +153,7 @@ npm install
 npm run build
 npm test
 npm run typecheck
+npm run echocodex:run
 ```
 
 ## Safety posture
