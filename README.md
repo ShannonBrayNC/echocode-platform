@@ -4,6 +4,13 @@ Internal Codex-style engineering agent platform for the Lantern Protocol stack.
 
 EchoCodex repurposes the original EchoCode concept into a repo-aware engineering executor that works with Christina, SignalForge, and ETS. It is designed to inspect repository context, select safe issues, plan implementation work, propose patches, run validation, and produce auditable reports.
 
+## Operator documentation
+
+- [Architecture](docs/architecture/echocodex.md)
+- [Dry-run sprint runbook](docs/runbooks/run-dry-run-sprint.md)
+- [Policy gates guide](docs/security/policy-gates.md)
+- [Troubleshooting](docs/troubleshooting.md)
+
 ## Implemented foundation
 
 ### Issue #37: Repo Context Gate
@@ -146,6 +153,12 @@ Supported flags:
 
 Non-dry-run modes remain blocked unless the policy explicitly permits them.
 
+### Issue #48: Operator Documentation
+
+EchoCodex now includes operator-facing documentation for architecture, dry-run sprint execution, policy gates, and troubleshooting.
+
+The docs identify Christina as scheduler/planner, EchoCodex as engineering executor, SignalForge as router, and ETS as trust verifier. They also include stack examples for OpsHelm, SignalForge, Lantern-Civic, EchoMedia Content Engine, and Casakey/EchoLiving migration context.
+
 ## Development commands
 
 ```bash
@@ -172,3 +185,4 @@ EchoCodex starts in dry-run mode. Live writes, branch creation, pull requests, a
 8. Run reports and audit artifacts
 9. SignalForge routing and ETS trust verification
 10. Internal CLI runner
+11. Scheduled dry-run workflow
