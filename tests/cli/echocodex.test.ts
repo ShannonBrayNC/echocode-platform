@@ -36,8 +36,7 @@ const issues: RunnerIssue[] = [
 
 const repoContext = {
   repositoryName: "ShannonBrayNC/echocode-platform",
-  currentBranch: "main",
-  files: [
+  fileTree: [
     "package.json",
     "tsconfig.json",
     "src/runner/runEchoCodexSprint.ts",
@@ -52,6 +51,7 @@ test("dry-run sprint runner returns machine-readable result and report path", as
     policy: defaultEchoCodexPolicy,
     issues,
     repoContext,
+    currentBranch: "main",
     mode: "dryRun",
     actor: "test-runner",
     timestamp: "2026-05-29T06:00:00Z"
@@ -71,10 +71,8 @@ test("non-dry-run mode is blocked by default policy", async () => {
     runnerConfig,
     policy: defaultEchoCodexPolicy,
     issues,
-    repoContext: {
-      ...repoContext,
-      currentBranch: "feature/cli"
-    },
+    repoContext,
+    currentBranch: "feature/cli",
     mode: "openPullRequest",
     actor: "test-runner",
     timestamp: "2026-05-29T06:00:00Z"
