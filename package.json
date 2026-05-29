@@ -9,6 +9,9 @@
     "test": "node --test --import tsx tests/**/*.test.ts",
     "typecheck": "tsc -p tsconfig.json --noEmit"
   },
+  "dependencies": {
+    "@octokit/rest": "latest"
+  },
   "devDependencies": {
     "@types/node": "latest",
     "tsx": "latest",
