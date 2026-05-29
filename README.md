@@ -64,6 +64,14 @@ Protected paths are blocked by default:
 
 Auto approval is available only as `safeOnly`. This approves clean patches with no warnings and no blockers. Any warning, protected file, missing metadata, or unsafe path forces human review or blocks the patch.
 
+### Issue #42: Validation Harness
+
+The validation harness resolves build, test, lint, and typecheck commands from repository inventory and produces preview-mode validation reports.
+
+It supports Node, TypeScript, Python, PowerShell, and mixed repositories. Reports include JSON-ready command results, warnings, blocked state, and Markdown summaries.
+
+The harness is preview-first. It does not execute shell commands yet. Missing validation commands produce warnings and block Christina from marking a sprint complete.
+
 ## Development commands
 
 ```bash
