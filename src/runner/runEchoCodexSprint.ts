@@ -18,6 +18,7 @@ export type EchoCodexSprintRunnerInput = {
   policy?: EchoCodexPolicy;
   issues: RunnerIssue[];
   repoContext: RepoScannerInput;
+  currentBranch?: string;
   repo?: string;
   issueNumber?: number;
   maxItems?: number;
@@ -54,6 +55,10 @@ export async function runEchoCodexSprint(input: EchoCodexSprintRunnerInput): Pro
     maxItems
   );
 
+  if (!repo) {
+    throw new Error("Repository name is required for EchoCodex sprint execution.");
+  }
+
   const selected = selectNextIssue({
     issues: scopedIssues,
     explicitIssue: input.issueNumber ? { repo, number: input.issueNumber } : undefined,
@@ -68,7 +73,7 @@ export async function runEchoCodexSprint(input: EchoCodexSprintRunnerInput): Pro
   const plan = planSprint({
     issue: selected.selectedIssue,
     repoInventory: inventory,
-    currentBranch: input.repoContext.currentBranch
+    currentBranch: input.currentBranch
   });
   const validationResolved = resolveValidationCommands(inventory);
   const validationReport = createPreviewValidationReport({
@@ -81,7 +86,7 @@ export async function runEchoCodexSprint(input: EchoCodexSprintRunnerInput): Pro
     policy,
     requestedMode: mode,
     repo,
-    branch: input.repoContext.currentBranch,
+    branch: input.currentBranch,
     changedPaths: plan.impactedFiles,
     validationPassed: validationReport.blocked === false,
     humanApproval: false
@@ -122,7 +127,7 @@ export async function runEchoCodexSprint(input: EchoCodexSprintRunnerInput): Pro
   const nextAction = policyDecision.decision === "allow" && validationStatus !== "blocked" ? "ready-for-human-review" : "human-review-required";
   const runReport = createEchoCodexRunReport({
     repo,
-    branch: input.repoContext.currentBranch,
+    branch: input.currentBranch,
     selectedIssue: selected.selectedIssue,
     policyDecision,
     actor,
