@@ -127,7 +127,7 @@ function buildRunnerIssue(call: EchoAlphaRequirementsCall): RunnerIssue {
     priority: 125,
     updatedAt: "2026-05-29T07:45:00Z",
     url: "https://github.com/ShannonBrayNC/echocode-platform/issues/5701",
-    sourceSystem: "christina"
+    sourceSystem: "github"
   };
 }
 
