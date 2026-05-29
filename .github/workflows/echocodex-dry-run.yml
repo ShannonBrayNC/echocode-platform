@@ -1,0 +1,91 @@
+name: EchoCodex Dry-Run Christina Review
+
+on:
+  workflow_dispatch:
+    inputs:
+      target_repo:
+        description: Target repository in owner/name format
+        required: false
+        default: ShannonBrayNC/echocode-platform
+      issue_number:
+        description: Optional issue number to force-select
+        required: false
+        default: ""
+      max_items:
+        description: Maximum candidate issues to consider
+        required: false
+        default: "25"
+  schedule:
+    - cron: "17 10 * * 1"
+
+permissions:
+  contents: read
+  actions: read
+
+concurrency:
+  group: echocodex-dry-run-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  dry-run:
+    name: Dry-run EchoCodex review
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build
+        run: npm run build
+
+      - name: Test
+        run: npm test
+
+      - name: Typecheck
+        run: npm run typecheck
+
+      - name: Run EchoCodex dry-run
+        shell: bash
+        env:
+          TARGET_REPO: ${{ github.event.inputs.target_repo || 'ShannonBrayNC/echocode-platform' }}
+          ISSUE_NUMBER: ${{ github.event.inputs.issue_number || '' }}
+          MAX_ITEMS: ${{ github.event.inputs.max_items || '25' }}
+        run: |
+          set -euo pipefail
+
+          args=(
+            "src/cli/echocodex.ts"
+            "--mode" "dryRun"
+            "--repo" "${TARGET_REPO}"
+            "--maxItems" "${MAX_ITEMS}"
+            "--reportDir" "reports/echocodex/runs"
+            "--json"
+            "--mock"
+          )
+
+          if [[ -n "${ISSUE_NUMBER}" ]]; then
+            args+=("--issue" "${ISSUE_NUMBER}")
+          fi
+
+          npx tsx "${args[@]}" | tee echocodex-dry-run-output.json
+
+      - name: Upload EchoCodex reports
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: echocodex-dry-run-reports
+          path: |
+            reports/echocodex/runs/**
+            echocodex-dry-run-output.json
+          if-no-files-found: warn
+          retention-days: 14
