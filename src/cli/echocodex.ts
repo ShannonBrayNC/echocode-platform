@@ -71,8 +71,7 @@ function createMockIssues(repo: string): RunnerIssue[] {
 function createMockRepoContext(repo: string): RepoScannerInput {
   return {
     repositoryName: repo,
-    currentBranch: "main",
-    files: [
+    fileTree: [
       "package.json",
       "tsconfig.json",
       "src/cli/echocodex.ts",
@@ -120,6 +119,7 @@ export async function runCli(argv: string[]): Promise<number> {
     runnerConfig,
     policy,
     repo,
+    currentBranch: "main",
     issueNumber: args.issue,
     maxItems: args.maxItems,
     mode: args.mode ?? "dryRun",
