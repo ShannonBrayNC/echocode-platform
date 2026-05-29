@@ -77,7 +77,15 @@ function detectTestHints(files: string[]): string[] {
     hints.push("npm test");
   }
 
-  if (files.some((file) => baseName(file) === "pytest.ini" || file.includes("tests/"))) {
+  if (
+    files.some(
+      (file) =>
+        baseName(file) === "pytest.ini" ||
+        file.toLowerCase().endsWith("_test.py") ||
+        file.toLowerCase().endsWith("test_app.py") ||
+        file.toLowerCase().startsWith("tests/") && file.toLowerCase().endsWith(".py")
+    )
+  ) {
     hints.push("pytest");
   }
 
