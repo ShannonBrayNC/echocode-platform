@@ -1,0 +1,38 @@
+{
+  "repoPriority": [
+    {
+      "repo": "ShannonBrayNC/echocode-platform",
+      "priority": 100,
+      "labels": ["echocodex", "christina"]
+    },
+    {
+      "repo": "ShannonBrayNC/OpsHelm",
+      "priority": 90,
+      "labels": ["opshelm", "ai-analysis"]
+    },
+    {
+      "repo": "ShannonBrayNC/SignalForge",
+      "priority": 80,
+      "labels": ["signalforge", "routing"]
+    },
+    {
+      "repo": "ShannonBrayNC/Lantern-Civic",
+      "priority": 70,
+      "labels": ["lantern-civic", "civic"]
+    }
+  ],
+  "blockedLabels": [
+    "blocked",
+    "do-not-run",
+    "human-review-required",
+    "unsafe-live-write"
+  ],
+  "priorityLabels": {
+    "priority:critical": 50,
+    "priority:high": 25,
+    "priority:medium": 10,
+    "christina-ready": 20,
+    "echocodex": 15
+  },
+  "maxItems": 25
+}
