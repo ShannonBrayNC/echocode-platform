@@ -88,6 +88,24 @@ Policy gates block:
 
 This issue adds the gate only. It does not implement live writes, branch creation, PR creation, or merging.
 
+### Issue #44: Run Reports and Evidence Artifacts
+
+The reporting layer creates auditable EchoCodex run artifacts for Christina and human review.
+
+Reports are modeled under `reports/echocodex/runs/<run-id>/` and can include:
+
+- `run.json`
+- `plan.md`
+- `patch-preview.diff`
+- `validation.json`
+- `validation.md`
+- `summary.md`
+- `index-entry.json`
+
+Run reports include repo, branch, selected issue, policy mode, policy decision, actor, timestamp, risk level, validation status, next action, and deterministic run IDs.
+
+Sensitive values such as token, secret, password, API key, private key, connection string, bearer token, and GitHub token patterns are redacted from generated artifacts while traceability IDs remain intact.
+
 ## Development commands
 
 ```bash
