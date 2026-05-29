@@ -1,3 +1,4 @@
+import { evaluateRepoContext } from "../context/RepoContextGate.js";
 import { planSprint } from "../christina/planSprint.js";
 import { selectNextIssue } from "../christina/selectNextIssue.js";
 import type { EchoCodexRunnerConfig, RunnerIssue } from "../github/types.js";
@@ -74,6 +75,18 @@ export async function runEchoCodexSprint(input: EchoCodexSprintRunnerInput): Pro
 
   if (!selected.selectedIssue) {
     throw new Error(`No eligible issue selected: ${selected.blockers.map((blocker) => blocker.message).join("; ")}`);
+  }
+
+  const contextGate = evaluateRepoContext({
+    repositoryName: repo,
+    currentBranch: input.currentBranch,
+    fileTree: input.repoContext.fileTree,
+    issueObjective: selected.selectedIssue.title,
+    issueNumber: selected.selectedIssue.number
+  });
+
+  if (!contextGate.ready) {
+    throw new Error(`Repo context gate blocked sprint execution: ${contextGate.missingInputs.join(", ")}`);
   }
 
   const inventory = scanRepository(input.repoContext);
