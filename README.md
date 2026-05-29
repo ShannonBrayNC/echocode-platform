@@ -9,6 +9,7 @@ EchoCodex repurposes the original EchoCode concept into a repo-aware engineering
 - [Architecture](docs/architecture/echocodex.md)
 - [Dry-run sprint runbook](docs/runbooks/run-dry-run-sprint.md)
 - [Policy gates guide](docs/security/policy-gates.md)
+- [Live PR and write automation runbook](docs/runbooks/live-pr-write-automation.md)
 - [Troubleshooting](docs/troubleshooting.md)
 
 ## Implemented foundation
@@ -93,7 +94,7 @@ Policy gates block:
 - changed paths outside the allow-list
 - auto-merge unless validation passes and policy allows auto-merge
 
-This issue adds the gate only. It does not implement live writes, branch creation, PR creation, or merging.
+Live branch, file write, and pull request automation is implemented in `src/github/GitHubLiveAutomation.ts`, but it only executes when an explicit policy decision allows the requested mode.
 
 ### Issue #44: Run Reports and Evidence Artifacts
 
@@ -153,9 +154,23 @@ Supported flags:
 
 Non-dry-run modes remain blocked unless the policy explicitly permits them.
 
+### Christina Dry-Run Contract
+
+Christina can call `sendChristinaDryRun()` from `src/christina/ChristinaEchoCodexClient.ts` and receive a validated response containing:
+
+- `ok`
+- `mode`
+- `reportPath`
+- `selectedIssue`
+- `validationStatus`
+- `policyDecision`
+- `nextAction`
+
+The helper `isValidChristinaDryRunResponse()` verifies that the response is machine-readable and safe for routing or escalation.
+
 ### Issue #48: Operator Documentation
 
-EchoCodex now includes operator-facing documentation for architecture, dry-run sprint execution, policy gates, and troubleshooting.
+EchoCodex now includes operator-facing documentation for architecture, dry-run sprint execution, policy gates, live PR/write automation, and troubleshooting.
 
 The docs identify Christina as scheduler/planner, EchoCodex as engineering executor, SignalForge as router, and ETS as trust verifier. They also include stack examples for OpsHelm, SignalForge, Lantern-Civic, EchoMedia Content Engine, and Casakey/EchoLiving migration context.
 
@@ -188,7 +203,7 @@ npm run echocodex:run
 
 ## Safety posture
 
-EchoCodex starts in dry-run mode. Live writes, branch creation, pull requests, and auto-merge must remain blocked until policy gates are explicitly configured and approved.
+EchoCodex starts in dry-run mode. Live branch creation, file writes, and pull request creation are available only through the policy-gated live automation adapter. Auto-merge remains disabled unless policy explicitly allows it and validation passes.
 
 ## Planned pipeline
 
@@ -203,3 +218,4 @@ EchoCodex starts in dry-run mode. Live writes, branch creation, pull requests, a
 9. SignalForge routing and ETS trust verification
 10. Internal CLI runner
 11. Scheduled dry-run workflow
+12. Policy-gated live PR/write automation
