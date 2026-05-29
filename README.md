@@ -4,9 +4,9 @@ Internal Codex-style engineering agent platform for the Lantern Protocol stack.
 
 EchoCodex repurposes the original EchoCode concept into a repo-aware engineering executor that works with Christina, SignalForge, and ETS. It is designed to inspect repository context, select safe issues, plan implementation work, propose patches, run validation, and produce auditable reports.
 
-## Current sprint
+## Implemented foundation
 
-The first implemented capability is the **Repo Context Gate** for issue #37.
+### Issue #37: Repo Context Gate
 
 The gate prevents EchoCodex from planning or generating code until it has enough repository context:
 
@@ -20,6 +20,18 @@ It also warns when optional but important execution metadata is missing:
 - package/build metadata
 - test commands
 - build commands
+
+### Issue #38: Repository Scanner
+
+The scanner converts a file tree into a structured repository inventory for Christina and EchoCodex planning.
+
+It detects project types, package manager hints, manifests, docs, CI workflows, build/test hints, and sensitive paths.
+
+### Issue #39: GitHub Issue Ingestion
+
+The GitHub ingestion layer reads configured repositories, excludes pull requests, filters blocked labels, maps issues into `RunnerIssue` objects, and sorts work by repository priority, label priority, and update time.
+
+GitHub auth uses `GITHUB_TOKEN` first and falls back to `GH_PAT`.
 
 ## Development commands
 
