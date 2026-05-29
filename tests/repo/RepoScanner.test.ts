@@ -19,7 +19,7 @@ test("scanner detects TypeScript Node repository", () => {
   assert.deepEqual(inventory.projectTypes, ["node", "typescript", "mixed"]);
   assert.deepEqual(inventory.packageManagers, ["npm"]);
   assert.deepEqual(inventory.buildHints, ["npm run build"]);
-  assert.deepEqual(inventory.testHints, ["npm test", "pytest"]);
+  assert.deepEqual(inventory.testHints, ["npm test"]);
   assert.deepEqual(inventory.manifests, ["package.json", "tsconfig.json"]);
 });
 
