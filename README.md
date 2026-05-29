@@ -49,6 +49,21 @@ Sprint plans include:
 - rollback plan
 - Markdown summary
 
+### Issue #41: Patch Safety Model
+
+The patch safety model defines proposed file changes before any live write capability exists.
+
+It supports create, update, delete, rename, and no-op changes. It requires issue reference, rationale, validation commands, rollback notes, and per-file rationale.
+
+Protected paths are blocked by default:
+
+- secrets, credentials, tokens, certificates, and private keys
+- package lockfiles unless explicitly allowed
+- `.github/workflows` unless explicitly allowed
+- branch protection, CODEOWNERS, repository rules, and repository settings
+
+Auto approval is available only as `safeOnly`. This approves clean patches with no warnings and no blockers. Any warning, protected file, missing metadata, or unsafe path forces human review or blocks the patch.
+
 ## Development commands
 
 ```bash
