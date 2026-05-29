@@ -1,0 +1,8 @@
+{
+  "component": "echocodex",
+  "artifactType": "ci-evidence",
+  "ciContract": "generated-python-smoke",
+  "lanternProtocolReady": true,
+  "generatedBy": "Christina/EchoCodex PR #57",
+  "notes": "Evidence artifact required by tools/ci_validate.py for the legacy EchoCode CI workflow."
+}
