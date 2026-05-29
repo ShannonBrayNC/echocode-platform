@@ -159,6 +159,23 @@ EchoCodex now includes operator-facing documentation for architecture, dry-run s
 
 The docs identify Christina as scheduler/planner, EchoCodex as engineering executor, SignalForge as router, and ETS as trust verifier. They also include stack examples for OpsHelm, SignalForge, Lantern-Civic, EchoMedia Content Engine, and Casakey/EchoLiving migration context.
 
+### Issue #47: Scheduled Dry-Run Workflow
+
+The repository includes `.github/workflows/echocodex-dry-run.yml` for manual or scheduled Christina dry-run reviews.
+
+The workflow:
+
+- checks out the repo
+- installs Node dependencies
+- runs build, tests, and typecheck
+- executes EchoCodex in `dryRun` mode only
+- uploads generated report artifacts
+- supports manual inputs for target repo, issue number, and max items
+
+The scheduled run uses a weekly cron. Disable scheduled runs by commenting or removing the `schedule` block in the workflow. Manual `workflow_dispatch` can remain enabled for operator-triggered reviews.
+
+The workflow uses least-privilege `contents: read` and `actions: read` permissions. It does not require additional secrets while the CLI uses mocked issue/repo context. Future real GitHub issue ingestion should document and use the narrowest token permissions available.
+
 ## Development commands
 
 ```bash
