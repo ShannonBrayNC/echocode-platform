@@ -54,23 +54,64 @@ function readJsonFile<T>(path: string): T {
   return JSON.parse(readFileSync(path, "utf8")) as T;
 }
 
-function createMockIssues(repo: string): RunnerIssue[] {
+function createMockIssues(repo: string, issueNumber?: number): RunnerIssue[] {
+  const number = issueNumber ?? 46;
+  const isOpsHelmGraphIssue = repo === "ShannonBrayNC/OpsHelm" && number === 47;
+
   return [
     {
       repo,
-      number: 46,
-      title: "Create internal CLI runner for dry-run sprint execution",
-      body: "Mocked issue for local dry-run CLI validation.",
-      labels: ["echocodex", "christina-ready"],
-      priority: 100,
+      number,
+      title: isOpsHelmGraphIssue
+        ? "Phase 2: Implement Graph live delta ingestion and ticket container writer"
+        : "Create internal CLI runner for dry-run sprint execution",
+      body: isOpsHelmGraphIssue
+        ? [
+            "Implement the live Microsoft Graph ingestion layer that converts mailbox messages into deterministic OpsHelm ticket containers.",
+            "",
+            "Scope:",
+            "- Add incremental polling with delta/checkpoint support.",
+            "- Add ticket container writer.",
+            "- Persist checkpoint state.",
+            "- Preserve deterministic replay mode.",
+            "- Keep mailbox access read-only.",
+            "- Emit governance/audit metadata.",
+            "",
+            "Acceptance Criteria:",
+            "- Can run in deterministic replay mode without Graph credentials.",
+            "- Can poll mailbox messages when Graph credentials are configured.",
+            "- Groups normalized messages by ticket ID.",
+            "- Emits Ticket-* containers compatible with existing tools.",
+            "- Does not send email.",
+            "- Does not mutate mailbox state.",
+            "- Preserves checkpoint metadata for resumable ingestion."
+          ].join("\n")
+        : "Mocked issue for local dry-run CLI validation.",
+      labels: isOpsHelmGraphIssue ? ["opshelm", "ai-analysis", "priority:high"] : ["echocodex", "christina-ready"],
+      priority: isOpsHelmGraphIssue ? 125 : 100,
       updatedAt: "2026-05-29T06:00:00Z",
-      url: `https://github.com/${repo}/issues/46`,
+      url: `https://github.com/${repo}/issues/${number}`,
       sourceSystem: "github"
     }
   ];
 }
 
 function createMockRepoContext(repo: string): RepoScannerInput {
+  if (repo === "ShannonBrayNC/OpsHelm") {
+    return {
+      repositoryName: repo,
+      fileTree: [
+        "package.json",
+        "services/ingestion/runTicketAnalysis.ts",
+        "services/ingestion/tests/runTicketAnalysis.test.ts",
+        "services/ingestion/tests/graphIngestion.test.ts",
+        "services/ingestion/connectors/graphDeltaClient.ts",
+        "services/ingestion/writers/ticketContainerWriter.ts",
+        "services/ingestion/checkpoints/checkpointStore.ts"
+      ]
+    };
+  }
+
   return {
     repositoryName: repo,
     fileTree: [
@@ -133,7 +174,7 @@ export async function runCli(argv: string[]): Promise<number> {
     maxItems: args.maxItems,
     mode: args.mode ?? "dryRun",
     reportDir: args.reportDir,
-    issues: createMockIssues(repo),
+    issues: createMockIssues(repo, args.issue),
     repoContext: createMockRepoContext(repo),
     actor: "echocodex-cli",
     timestamp: "2026-05-29T06:00:00Z"
