@@ -43,6 +43,13 @@ function limitIssues(issues: RunnerIssue[], maxItems: number): RunnerIssue[] {
   return issues.slice(0, Math.max(0, maxItems));
 }
 
+function remapArtifactPaths(artifacts: EchoCodexSprintRunnerResult["artifacts"], sourceRoot: string, targetRoot: string): EchoCodexSprintRunnerResult["artifacts"] {
+  return artifacts.map((artifact) => ({
+    ...artifact,
+    path: artifact.path.startsWith(sourceRoot) ? `${targetRoot}${artifact.path.slice(sourceRoot.length)}` : artifact.path
+  }));
+}
+
 export async function runEchoCodexSprint(input: EchoCodexSprintRunnerInput): Promise<EchoCodexSprintRunnerResult> {
   const mode = input.mode ?? "dryRun";
   const maxItems = input.maxItems ?? input.runnerConfig.maxItems ?? 25;
@@ -141,6 +148,7 @@ export async function runEchoCodexSprint(input: EchoCodexSprintRunnerInput): Pro
 
   const bundle = buildRunArtifacts(runReport);
   const reportPath = input.reportDir ? `${input.reportDir.replace(/\/$/, "")}/${runReport.runId}` : bundle.runDirectory;
+  const artifacts = input.reportDir ? remapArtifactPaths(bundle.artifacts, bundle.runDirectory, reportPath) : bundle.artifacts;
 
   return {
     mode,
@@ -155,6 +163,6 @@ export async function runEchoCodexSprint(input: EchoCodexSprintRunnerInput): Pro
     policyDecision,
     validationStatus,
     nextAction,
-    artifacts: bundle.artifacts
+    artifacts
   };
 }
