@@ -50,6 +50,18 @@ export function createRunId(params: { repo: string; issueNumber: number; timesta
   return `${timeSlug}-${repoSlug}-${params.issueNumber}`;
 }
 
+function normalizeValidationStatus(report?: ValidationReport): EchoCodexRunReport["validationStatus"] {
+  if (!report) {
+    return "not-run";
+  }
+
+  if (report.blocked) {
+    return "blocked";
+  }
+
+  return report.mode === "preview" ? "preview" : "passed";
+}
+
 export function renderRunSummaryMarkdown(report: Omit<EchoCodexRunReport, "summaryMarkdown">): string {
   return [
     "# EchoCodex Run Summary",
@@ -92,7 +104,7 @@ export function createEchoCodexRunReport(input: EchoCodexRunReportInput): EchoCo
     actor: input.actor,
     timestamp: input.timestamp,
     riskLevel: input.riskLevel ?? (input.policyDecision.decision === "block" ? "blocked" : "low"),
-    validationStatus: input.validationStatus ?? input.validationReport?.mode ?? "not-run",
+    validationStatus: input.validationStatus ?? normalizeValidationStatus(input.validationReport),
     nextAction: input.nextAction,
     planMarkdown: input.planMarkdown,
     patchPreviewDiff: input.patchPreviewDiff,
