@@ -72,6 +72,22 @@ It supports Node, TypeScript, Python, PowerShell, and mixed repositories. Report
 
 The harness is preview-first. It does not execute shell commands yet. Missing validation commands produce warnings and block Christina from marking a sprint complete.
 
+### Issue #43: Policy Gates
+
+The policy gate decides whether EchoCodex may proceed in `dryRun`, `writeWorkspace`, `createBranch`, `openPullRequest`, or `autoMerge` mode.
+
+The default policy allows `dryRun` only. Any mode beyond dry-run requires explicit policy permission and human approval unless a repo override says otherwise.
+
+Policy gates block:
+
+- unsupported modes
+- protected branch writes
+- denied paths such as secrets, certificates, workflows, lockfiles, and CODEOWNERS
+- changed paths outside the allow-list
+- auto-merge unless validation passes and policy allows auto-merge
+
+This issue adds the gate only. It does not implement live writes, branch creation, PR creation, or merging.
+
 ## Development commands
 
 ```bash
@@ -83,7 +99,7 @@ npm run typecheck
 
 ## Safety posture
 
-EchoCodex starts in dry-run mode. Live writes, branch creation, pull requests, and auto-merge must remain blocked until policy gates are implemented and explicitly enabled.
+EchoCodex starts in dry-run mode. Live writes, branch creation, pull requests, and auto-merge must remain blocked until policy gates are explicitly configured and approved.
 
 ## Planned pipeline
 
