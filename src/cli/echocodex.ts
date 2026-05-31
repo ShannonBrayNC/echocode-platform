@@ -1,7 +1,8 @@
 #!/usr/bin/env node
 
 import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
-import { dirname } from "node:path";
+import { dirname, resolve } from "node:path";
+import { fileURLToPath } from "node:url";
 import { runEchoCodexSprint } from "../runner/runEchoCodexSprint.js";
 import type { EchoCodexRunnerConfig, RunnerIssue } from "../github/types.js";
 import type { EchoCodexMode, EchoCodexPolicy } from "../policy/EchoCodexPolicy.js";
@@ -16,6 +17,14 @@ export type EchoCodexCliArgs = {
   json?: boolean;
   mock?: boolean;
 };
+
+export function isDirectCliExecution(importMetaUrl: string, argvPath?: string): boolean {
+  if (!argvPath) {
+    return false;
+  }
+
+  return resolve(fileURLToPath(importMetaUrl)) === resolve(argvPath);
+}
 
 function parseArgs(argv: string[]): EchoCodexCliArgs {
   const args: EchoCodexCliArgs = {};
@@ -154,7 +163,7 @@ export async function runCli(argv: string[]): Promise<number> {
   return result.policyDecision.decision === "block" ? 2 : 0;
 }
 
-if (import.meta.url === `file://${process.argv[1]}`) {
+if (isDirectCliExecution(import.meta.url, process.argv[1])) {
   runCli(process.argv.slice(2)).then((exitCode) => {
     process.exitCode = exitCode;
   }).catch((error: unknown) => {
@@ -163,3 +172,5 @@ if (import.meta.url === `file://${process.argv[1]}`) {
     process.exitCode = 1;
   });
 }
+
+
