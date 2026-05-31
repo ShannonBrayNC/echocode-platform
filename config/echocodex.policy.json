@@ -1,26 +1,85 @@
 {
   "defaultMode": "dryRun",
-  "allowedModes": ["dryRun"],
+  "allowedModes": [
+    "dryRun"
+  ],
   "requireHumanApprovalBeyondDryRun": true,
-  "protectedBranches": ["main", "master", "production", "release"],
+  "protectedBranches": [
+    "main",
+    "master",
+    "production",
+    "release"
+  ],
   "allowPaths": [
-    { "pattern": "src/**" },
-    { "pattern": "tests/**" },
-    { "pattern": "docs/**" },
-    { "pattern": "README.md" },
-    { "pattern": "config/*.json" }
+    {
+      "pattern": "src/**"
+    },
+    {
+      "pattern": "tests/**"
+    },
+    {
+      "pattern": "docs/**"
+    },
+    {
+      "pattern": "README.md"
+    },
+    {
+      "pattern": "config/*.json"
+    }
   ],
   "denyPaths": [
-    { "pattern": ".env*", "reason": "Environment and secret files are protected." },
-    { "pattern": "**/*.pem", "reason": "Private key and certificate files are protected." },
-    { "pattern": "**/*.pfx", "reason": "Private key and certificate files are protected." },
-    { "pattern": "**/*.key", "reason": "Private key files are protected." },
-    { "pattern": ".github/workflows/**", "reason": "Workflow changes require explicit policy approval." },
-    { "pattern": "CODEOWNERS", "reason": "Code ownership changes require explicit policy approval." },
-    { "pattern": "package-lock.json", "reason": "Lockfile changes require explicit policy approval." },
-    { "pattern": "pnpm-lock.yaml", "reason": "Lockfile changes require explicit policy approval." },
-    { "pattern": "yarn.lock", "reason": "Lockfile changes require explicit policy approval." }
+    {
+      "pattern": ".env*",
+      "reason": "Environment and secret files are protected."
+    },
+    {
+      "pattern": "**/*.pem",
+      "reason": "Private key and certificate files are protected."
+    },
+    {
+      "pattern": "**/*.pfx",
+      "reason": "Private key and certificate files are protected."
+    },
+    {
+      "pattern": "**/*.key",
+      "reason": "Private key files are protected."
+    },
+    {
+      "pattern": ".github/workflows/**",
+      "reason": "Workflow changes require explicit policy approval."
+    },
+    {
+      "pattern": "CODEOWNERS",
+      "reason": "Code ownership changes require explicit policy approval."
+    },
+    {
+      "pattern": "package-lock.json",
+      "reason": "Lockfile changes require explicit policy approval."
+    },
+    {
+      "pattern": "pnpm-lock.yaml",
+      "reason": "Lockfile changes require explicit policy approval."
+    },
+    {
+      "pattern": "yarn.lock",
+      "reason": "Lockfile changes require explicit policy approval."
+    }
   ],
   "allowAutoMerge": false,
-  "repoOverrides": []
+  "repoOverrides": [
+    {
+      "repo": "ShannonBrayNC/EchoSpectrum",
+      "allowPaths": [
+        {
+          "pattern": "signalforge.manifest.json"
+        },
+        {
+          "pattern": "README.md"
+        },
+        {
+          "pattern": "tests/**"
+        }
+      ]
+    }
+  ]
 }
