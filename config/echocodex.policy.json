@@ -78,6 +78,12 @@
         },
         {
           "pattern": "tests/**"
+        },
+        {
+          "pattern": "config/environments/README.md"
+        },
+        {
+          "pattern": "deployments/azure/README.md"
         }
       ]
     }
